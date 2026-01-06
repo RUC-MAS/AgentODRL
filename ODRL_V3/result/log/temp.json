@@ -1,0 +1,29 @@
+[
+    {
+        "timestamp_utc": "2026-01-06T17:44:05.978644+00:00",
+        "configuration": {
+            "models_used": {
+                "main_llm": "gpt-4.1-nano",
+                "utils_llm": "gpt-4.1",
+                "lora_llm": "gpt-5-nano"
+            },
+            "usecase_source": "ODRL_V3\\data_preparation\\simple_usecases copy 2.json",
+            "mongo_collection": "for_demo",
+            "max_concurrency": 60,
+            "max_reflections": 4,
+            "switches": {
+                "ENABLE_REFERENCE_RESOLUTION": false,
+                "ENABLE_POLICY_SPLITTING": true,
+                "ENABLE_CONSTRAINT_REFLECTION_BRANCH": false
+            }
+        },
+        "results": {
+            "total_execution_time_seconds": 198.9267,
+            "tracked_token_usage": {
+                "prompt_tokens": 282448,
+                "completion_tokens": 109564,
+                "total_tokens": 392012
+            }
+        }
+    }
+]

@@ -1,0 +1,60 @@
+{
+    "metadata": {
+        "source_database": "odrl3_final_e3",
+        "source_collection": "e3_41nano_all_3_o"
+    },
+    "results": {
+        "simple": {
+            "average_reflection_attempts": 7.135984848484849,
+            "performance_by_strategy": {
+                "ontology": {
+                    "syntactic_score": "79.36%",
+                    "semantic_score": "53.23%"
+                },
+                "semantic_syntactic": {
+                    "syntactic_score": "90.01%",
+                    "semantic_score": "73.20%"
+                }
+            }
+        },
+        "all": {
+            "average_reflection_attempts": 7.062136974425662,
+            "performance_by_strategy": {
+                "ontology": {
+                    "syntactic_score": "79.18%",
+                    "semantic_score": "53.65%"
+                },
+                "semantic_syntactic": {
+                    "syntactic_score": "89.90%",
+                    "semantic_score": "72.35%"
+                }
+            }
+        },
+        "concurrent": {
+            "average_reflection_attempts": 6.974772727272727,
+            "performance_by_strategy": {
+                "ontology": {
+                    "syntactic_score": "78.61%",
+                    "semantic_score": "55.16%"
+                },
+                "semantic_syntactic": {
+                    "syntactic_score": "89.48%",
+                    "semantic_score": "73.27%"
+                }
+            }
+        },
+        "progressive": {
+            "average_reflection_attempts": 6.940366972477064,
+            "performance_by_strategy": {
+                "ontology": {
+                    "syntactic_score": "79.60%",
+                    "semantic_score": "52.32%"
+                },
+                "semantic_syntactic": {
+                    "syntactic_score": "90.30%",
+                    "semantic_score": "67.07%"
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,157 @@
+"""
+rule_1= A Policy MUST have one 'odrl:uid' property value of type IRI to identify the Policy, if odrl:uid is missed use 
+             odrl:uid <UI> ;
+             where "UI" is a placeholder, fill the an appropriate name of policy from policy description.
+        
+
+rule_2 = A Policy MUST have one 'odrl:profile' property value of type IRI to identify the Policy.
+                        if odrl:profile is missed create 'odrl:profile' with an appropriate name from policy description.
+         
+
+rule_3 = The generated ODRL policy MUST hav the following mandatory meta-information properties: dc:creator, dc:title, dc:description, and dc:issued. If any of these properties is not explicitly defined in policy, add them to policy with an appropriate name from policy description with the following values:
+                dc:creator "Policy Owner"^^xsd:string;
+                dc:title "Agreement title"^^xsd:string;
+                dc:description "Agreement description"^^xsd:string;
+                dc:issued "Current DateTime"^^xsd:dateTime.
+
+                where "Policy Owner" is a placeholder, fill the name of policy owner from policy description.
+                      "Agreement title" is a placeholder, fill the title of policy from policy description.
+                      "description" is a placeholder, fill the description of policy from policy description.
+                      "Current DateTime" is a placeholder, fill the Current DateTime.
+
+rule_4 = Permission MUST have one 'odrl:assigner' of type Party who is issuing the policy if it is not explicitly defined. do the following steps:
+            step1: Declare One 'odrl:assigner' property value of odrl:Party class.
+            step2: generate 'odrl:uid' property value of type IRI to identify the Party.
+            step3: generate 'dc:description' of type String to describe a party from policy description. 
+            step4: reference the generated 'odrl:assigner' in side 'odrl:permission'.
+
+            below is an example of how the generated output should look like. 
+            example:
+                    drkodrl:"Policy assigner" a odrl:Party;
+                        odrl:uid <UI>;
+                        dc:description "AsignerDescription"^^xsd:string;
+        
+            where "Policy assigner", "UI", "AsignerDescription" are placeholders, fill it with an appropriate value as mentioned above.                                                             
+
+rule_5 = Permission MUST have one 'odrl:assignee' of type Party who receive the policy if it is not explicitly defined. do the following steps:
+            step1: Declare One 'odrl:assignee' property value of odrl:Party class.
+            step2: generate 'odrl:uid' property value of type IRI to identify the Party.
+            step3: generate 'dc:description' of type String to describe a party from policy description. 
+            step4: reference the generated 'odrl:assigner' in side 'odrl:permission'.
+
+            below is an example of how the generated output should look like. 
+            example:
+                    drkodrl:"Policy assignee" a odrl:Party;
+                        odrl:uid <UI>;
+                        dc:description "AsignerDescription"^^xsd:string;
+        
+            where "Policy assignee", "UI", "AsignerDescription" are placeholders, fill it with an appropriate value as mentioned above.                                                             
+                
+rule_6 =  Permission MUST have one 'target' property value of type Asset. If 'target' Type has not been explicitly defined, if it is not explicitly defined. do the following steps:
+            step1: Declar One 'odrl:target' property value of odrl:Asset class.
+            step2: generate 'odrl:uid' property value of type IRI to identify the Asset.
+            step3: generate 'dc:description' of type String, describe Asset from policy description. 
+            step4: reference the generated 'odrl:target' in side 'odrl:permission'.
+
+            below is an example of how the generated output should look like. 
+            example:
+                    drkodrl:"Policy Asset" a odrl:Asset;
+                        odrl:uid <UI>;
+                        dc:description "AssetDescription"^^xsd:string;
+        
+            where "Policy Asset", "UI", "AssetDescription" are placeholders, fill it with an appropriate value as mentioned above.      
+         
+
+rule_7 =  for 'odrl:action' Property in 'odrl:permission' or 'odrl:prohibition' or 'odrl:obligation'  must have property value within standardized values include:
+            [odrl:use, odrl:transfer, odrl:acceptTracking, odrl:aggregate, odrl:annotate, odrl:anonymize, odrl:archive, odrl:attribute, odrl:compensate, odrl:concurrentUse, odrl:delete, odrl:derive, odrl:digitize, odrl:display, odrl:distribute, odrl:ensureExclusivity, odrl:execute, odrl:extract, odrl:give, odrl:grantUse, odrl:include, odrl:index, odrl:inform, odrl:install, odrl:modify, odrl:move, odrl:nextPolicy, odrl:obtainConsent, odrl:play, odrl:present, odrl:print, odrl:read, odrl:reproduce, odrl:reviewPolicy, odrl:sell, odrl:stream, odrl:synchronize, odrl:textToSpeech, odrl:transform, odrl:translate, odrl:uninstall, odrl:watermark, cc:Attribution, cc:CommercialUse, cc:DerivativeWorks, cc:Distribution, cc:Notice, cc:Reproduction, cc:ShareAlike, cc:Sharing, cc:SourceCode].
+            If none of the standardized values of action is defined please create a custom action using odrl:Action. inside the Rule. Example:
+                                action [
+                                    a odrl:Action ;
+                                    "your_custom_actionName"^^xsd:string;
+                                ] ;
+            
+            where "your_custom_actionName" is a placeholders, fill it with an appropriate value based on 'action' as described in policy description.
+         
+rule_8 =  'odrl:duty' MAY have none or one 'odrl:target' property value of type Asset. If 'target' Type has not been explicitly defined, if it is not explicitly defined. do the following steps:
+            step1: Declar One 'odrl:target' property value of odrl:Asset class.
+            step2: generate 'odrl:uid' property value of type IRI to identify the Asset.
+            step3: generate 'dc:description' of type String, describe Asset from policy description. 
+            step4: reference the generated 'odrl:target' in side 'odrl:permission'.
+
+            below is an example of how the generated output should look like. 
+            example:
+                    drkodrl:"Policy Asset" a odrl:Asset;
+                        odrl:uid <UI>;
+                        dc:description "AssetDescription"^^xsd:string;
+        
+            where "Policy Asset", "UI", "AssetDescription" are placeholders, fill it with an appropriate value as mentioned above.      
+         
+
+rule_9 =  'odrl:prohibition' MUST have one 'odrl:assigner' of type Party who is issuing the policy if it is not explicitly defined. do the following steps:
+            step1: Declar One 'odrl:assigner' property value of odrl:Party class.
+            step2: generate 'odrl:uid' property value of type IRI to identify the Party.
+            step3: generate 'dc:description' of type String to describe a party from policy description. 
+            step4: reference the generated 'odrl:assigner' in side 'odrl:permission'.
+
+            below is an example of how the generated output should look like. 
+            example:
+                    drkodrl:"Policy assigner" a odrl:Party;
+                        odrl:uid <UI>;
+                        dc:description "AsignerDescription"^^xsd:string;
+        
+            where "Policy assigner", "UI", "AsignerDescription" are placeholders, fill it with an appropriate value as mentioned above.                               
+         
+
+rule_10 =  'odrl:prohibition' MUST have one 'odrl:target' property value of type Asset. If 'target' Type has not been explicitly defined, if it is not explicitly defined. do the following steps:
+            step1: Declar One 'odrl:target' property value of odrl:Asset class.
+            step2: generate 'odrl:uid' property value of type IRI to identify the Asset.
+            step3: generate 'dc:description' of type String, describe Asset from policy description. 
+            step4: reference the generated 'odrl:target' in side 'odrl:permission'.
+
+            below is an example of how the generated output should look like. 
+            example:
+                    drkodrl:"Policy Asset" a odrl:Asset;
+                        odrl:uid <UI>;
+                        dc:description "AssetDescription"^^xsd:string;
+        
+            where "Policy Asset", "UI", "AssetDescription" are placeholders, fill it with an appropriate value as mentioned above.      
+       
+
+rule_11 = for 'odrl:action' Property in 'odrl:prohibition' or 'odrl:prohibition' or 'odrl:obligation'  must have property value within standardized values include:
+            [odrl:use, odrl:transfer, odrl:acceptTracking, odrl:aggregate, odrl:annotate, odrl:anonymize, odrl:archive, odrl:attribute, odrl:compensate, odrl:concurrentUse, odrl:delete, odrl:derive, odrl:digitize, odrl:display, odrl:distribute, odrl:ensureExclusivity, odrl:execute, odrl:extract, odrl:give, odrl:grantUse, odrl:include, odrl:index, odrl:inform, odrl:install, odrl:modify, odrl:move, odrl:nextPolicy, odrl:obtainConsent, odrl:play, odrl:present, odrl:print, odrl:read, odrl:reproduce, odrl:reviewPolicy, odrl:sell, odrl:stream, odrl:synchronize, odrl:textToSpeech, odrl:transform, odrl:translate, odrl:uninstall, odrl:watermark, cc:Attribution, cc:CommercialUse, cc:DerivativeWorks, cc:Distribution, cc:Notice, cc:Reproduction, cc:ShareAlike, cc:Sharing, cc:SourceCode].
+            If none of the standardized values of action is defined please create a custom action using odrl:Action. inside the Rule. Example:
+                                action [
+                                    a odrl:Action ;
+                                    "your_custom_actionName"^^xsd:string;
+                                ] ;
+            
+            where "your_custom_actionName" is a placeholders, fill it with an appropriate value based on 'action' as described in policy description.
+         
+rule_12 =  do not define odrl:operator, odrl:rightOperand and odrl:rightOperand outside 'odrl:constrint' block. if it has been defined please relocate them in to 'odrl:constraint' block.
+                    as below:
+                    example:
+                         odrl:constraint[
+                                        a odrl:Constraint;
+                                        odrl:leftOperand "leftOperandPropertyValue";
+                                        odrl:operator "OperatorProperty";
+                                        odrl:rightOperand "rightOperandValue"^^xsd:dataType
+                                    ]
+                    where:
+                    "leftOperandPropertyValue" is a placeholders, fill it with an appropriate value based on constraint as described in policy description.
+                    "OperatorProperty" is a placeholders, fill it with an appropriate value based on operator as described in policy description.
+                    "rightOperandValue" is a placeholders, fill it with an appropriate value based on policy description.                    
+         
+rule_13 =  for leftOperand property value. 
+              If the specified value is not one of the predefined LeftOperand instances (odrl:absolutePosition, odrl:absoluteSpatialPosition, odrl:absoluteTemporalPosition, odrl:absoluteSize, odrl:count, odrl:dateTime, odrl:delayPeriod, odrl:deliveryChannel, odrl:elapsedTime, odrl:event, odrl:fileFormat, odrl:industry, odrl:language, odrl:media, odrl:meteredTime, odrl:payAmount, odrl:percentage, odrl:product, odrl:purpose, odrl:recipient, odrl:relativePosition, odrl:relativeSpatialPosition, odrl:relativeTemporalPosition, odrl:relativeSize, odrl:resolution, odrl:spatial, odrl:spatialCoordinates, odrl:systemDevice, odrl:timeInterval, odrl:unitOfCount, odrl:version, odrl:virtualLocation). 
+              check the policy description and choose the most appropriate predefined LeftOperand based on the context. refine the 'dorl:leftOperand' value.
+
+rule_14 = 'odrl:constraint' MUST have one 'odrl:uid' property value of type IRI:
+                        if  'odrl:uid' is missed add
+                          odrl:uid <UI>; 
+                where "UI" is placeholders, fill it with an appropriate value based on the odrl:constraint.
+         
+
+rule_15 =  'odrl:operator' property in the constraint must be one of the predefined values( odrl:eq, odrl:gt, odrl:gteq, odrl:lt, odrl:lteq, odrl:neq, odrl:isA, odrl:hasPart, odrl:isPartOf, odrl:isAllOf, odrl:isAnyOf, odrl:isNoneOf) If the specified value is  is not one of the predefined operators refine the operator based on the policy description context. 
+rule_16 =  'odrl:constraint' MUST have one  odrl:dataType property specifying the data type of the rightOperand. if it is missed add to policy.
+rule_17 = Ensure that the 'odrl:rightOperand' property in the ODRL policy includes a data type for its value. 
+"""

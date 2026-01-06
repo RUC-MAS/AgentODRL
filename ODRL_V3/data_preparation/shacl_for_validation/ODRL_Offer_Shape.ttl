@@ -1,0 +1,300 @@
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix odrl: <http://www.w3.org/ns/odrl/2/> .
+@prefix schema: <http://schema.org/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+@prefix drk: <https://w3id.org/drk> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix : <https://w3id.org/drk> .
+
+
+
+# Metadata
+:
+	a owl:Ontology ;
+	rdfs:label "drk shapes 0.01"@en ;
+	owl:versionInfo "0.01" ;
+	dc:creator "Daham Mustafa" ;
+	dc:contributor "" ;
+	dc:description "These SHACL shapes are designed to validate and ensure the structural integrity and content validity of ODRL policies."@en ;
+	rdfs:comment "This is the RDF ontology for ODRL SHACL shapes Version 0.01."@en ;
+    owl:imports <http://datashapes.org/dash> ;
+    owl:imports sh: ;
+    sh:declare [
+        a sh:PrefixDeclaration ;
+        sh:namespace "<https://w3id.org/drk>"^^xsd:anyURI ;
+        sh:prefix "drk"^^xsd:string ;
+    ] .
+
+# Agreement 20 scores
+
+# SHACL of Policy 
+
+# This SHACL shape is designed to evaluate the compliance of an ODRL policy with specific constraints. It assesses three main aspects of the policy and provides scores based on whether each constraint is met or not.
+
+# ## Constraints Checked by this Shape:
+# 1. **C1 - odrl:uid**: This constraint checks whether the policy contains an `odrl:uid` property. If this constraint is met, it receives a passing score; otherwise, it fails.
+
+# 2. **C3 - Meta Information**: This constraint evaluates whether the policy includes essential meta-information properties such as `dc:creator`, `dc:title`, `dc:description`, and `dc:issued`. If all of these properties are present, the constraint passes; otherwise, it fails.
+
+# 3. **C7 - Rule**: This constraint examines the policy rules to ensure they adhere to specified guidelines. If the rules meet the requirements, this constraint is considered passed; otherwise, it fails.
+
+# Each constraint is evaluated independently, and the shape provides scores based on the outcome of each assessment. If all constraints are met, the shape returns a passing score of 3. If one constraint fails, the score is reduced accordingly. A score of 2 indicates that two constraints are met, and a score of 1 indicates that only one constraint is met. If none of the constraints are met, the score is 0, indicating a complete failure to comply with the policy requirements.
+## Properties Evaluated by this Shape:
+# 1. **odrl:uid**
+# 2. **odrl:profile**
+# 3. **dc:description**
+# 4. **dc:creator**
+# 5. **dc:issued**
+# 6. **dc:title**
+# 7. **odrl:permission, odrl:prohibition, odrl:obligation**
+# total properties = 7
+:PolicyShape
+    a sh:NodeShape ;
+    sh:targetClass odrl:Policy, odrl:Offer ;
+    # C1- odrl:uid
+    # 1- score
+    sh:property [
+        sh:path odrl:uid ;
+        # sh:nodeKind sh:IRI ;
+        sh:minCount 1 ;
+        sh:message "The 'odrl:uid' property is missing or not an IRI." ;
+    ] ;
+    # C2- odrl:profile
+    # # 1- score
+    # 2
+    sh:property [
+        sh:path odrl:profile ;
+        # sh:nodeKind sh:IRI ;
+        sh:minCount 1 ;
+        sh:message "The 'odrl:profile' property is missing or not an IRI." ;
+    ] ;
+     # C3- odrl:meta info
+     # dc:description
+     # 1- score
+    #  3
+     sh:property [
+        sh:path dc:description ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        # sh:nodeKind sh:Literal ;
+        # sh:in ("Print Agreement description") ;  # Specific value constraint
+    ]; 
+    # 1- score
+    # dc:creator
+    # 4
+    sh:property [
+        sh:path dc:creator ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    # 1- score
+    # 5
+    sh:property [
+    sh:path dc:issued ;
+    sh:datatype xsd:dateTime ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:message "The 'dc:issued' property must have exactly one value of datatype xsd:dateTime." ;
+    ] ;
+    # 1- score
+    # 6
+    sh:property [
+        sh:path dc:title ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "The 'dc:title' property must have exactly one value of datatype xsd:string." ;
+    ] ;
+    # C7- Rule
+    # 1- score
+    # 7
+    sh:or (
+        [
+            sh:property [
+                sh:path odrl:permission ;
+                sh:severity sh:Violation ;
+                sh:minCount 1 ;
+                sh:class odrl:Permission;
+                sh:message "At least one 'odrl:permission' is required for this Policy." ;
+            ] ;
+        ]
+        [
+            sh:property [
+                sh:path odrl:prohibition ;
+                sh:severity sh:Violation ;
+                sh:minCount 1 ;
+                sh:class odrl:Prohibition;
+                sh:message "At least one 'odrl:prohibition' is required for this Policy." ;
+            ] ;
+        ]
+        [
+            sh:property [
+                sh:path odrl:obligation ;
+                sh:severity sh:Violation ;
+                sh:minCount 1 ;
+                sh:class odrl:Obligation;
+                sh:message "At least one 'odrl:obligation' is required for this Policy." ;
+            ] ;
+        ]
+    ); 
+    sh:message "At least one of 'odrl:permission', 'odrl:prohibition', or 'odrl:obligation' is required for this Policy." .
+
+# ### Constraints:
+# 1. **odrl:action**: Requires at least one `odrl:action` property to be specified for each `odrl:Permission` instance.
+# 2. **odrl:assigner**: Requires at least one `odrl:assigner` property, referencing the shape for the `odrl:Party`.
+# 3. **odrl:assigner**: Requires at least one `odrl:assigner` property, referencing the shape for the `odrl:Party`.
+
+# ## PartyShape
+# The `PartyShape` is a SHACL shape defined to validate instances of the `odrl:Party` class. It ensures that parties in an ODRL policy have the necessary properties.
+
+# ### Constraints:
+# 1. **rdf:type**: Requires that the `rdf:type` property is set to `odrl:Party`.
+# 2. **odrl:uid**: Requires at least one `odrl:uid` property of type `xsd:anyURI`.
+# 3. **dc:description**: Requires at least one `dc:description` property of type `xsd:string`.
+# total properties = 5
+# total scores 15+ 7
+
+drk:PermissionShape
+    a sh:NodeShape ;
+    sh:targetClass odrl:Permission ;
+    #  # 1- score
+    sh:property [
+        sh:path odrl:action ;
+        # sh:in (odrl:read odrl:write odrl:copy) ; # Add more values to 'odrl:action'
+        sh:minCount 1 ;
+    ] ;
+     # 1- score
+ sh:property [
+        sh:path odrl:assigner ;
+        sh:node drk:PartyShape ; # Reference to the shape for 'odrl:Party'
+        sh:minCount 1 ;
+    ];
+     # 1- score
+    #  offer dont hase assignee
+    # sh:property [
+    #     sh:path odrl:assignee ;
+    #     sh:node drk:PartyShape ; # Reference to the shape for 'odrl:Party'
+    #     sh:minCount 1 ;
+    # ] ;
+     # 1- score
+    sh:property [
+        sh:path odrl:target ;
+        sh:node drk:AssetShape ; # Reference to the shape for 'odrl:Party'
+        sh:minCount 1 ;
+    ] ;
+     # 1- score
+    sh:property [
+        sh:path odrl:constraint ;
+        sh:node drk:ConstraintShape ; # Reference to the shape for 'drk:Constraint'
+        sh:minCount 1 ;
+    ] .
+
+
+# Shape for the 'odrl:Party' node
+# total properties = 2
+drk:PartyShape
+    a sh:NodeShape ;
+    sh:targetClass odrl:Party ;
+    sh:property [
+        sh:path rdf:type ;
+        sh:hasValue odrl:Party ; # Ensure rdf:type is set to odrl:Party
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path odrl:uid ;
+        # sh:datatype xsd:anyURI ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path dc:description ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ; 
+    ] .
+
+# Shape for the 'odrl:Asset' node
+
+# In the SHACL shape constraint for drk:AssetShape, three properties are selected:
+# rdf:type: This property ensures that the node has the correct type, which is odrl:Asset. It uses the sh:hasValue constraint to specify that the value of rdf:type must be odrl:Asset. The minimum count is set to 1 to enforce that this property must be present.
+# odrl:uid: This property ensures that the node has a unique identifier (odrl:uid). The minimum count is set to 1 to enforce that this property must be present.
+# dc:description: This property ensures that the node has a description (dc:description). The minimum count is set to 1 to enforce that this property must be present.
+# total properties = 2
+drk:AssetShape
+    a sh:NodeShape ;
+    sh:targetClass odrl:Asset ;
+    sh:property [
+        sh:path rdf:type ;
+        sh:hasValue odrl:Asset ; # Ensure rdf:type is set to odrl:Party
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path odrl:uid ;
+        # sh:datatype xsd:anyURI ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path dc:description ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+    ] .
+
+# odrl:uid: This property ensures that the Constraint's 'odrl:uid' property is present and is of type IRI. It checks whether the unique identifier for the constraint is missing or not an IRI.
+
+# odrl:leftOperand: This property verifies that the Constraint has at least one 'odrl:leftOperand' of type 'odrl:Operand'. It ensures that the left operand of the constraint is properly defined.
+
+# odrl:operator: This property ensures that the Constraint has at least one 'odrl:operator' of type 'odrl:Operator'. It checks whether the operator for the constraint is correctly specified.
+
+# odrl:rightOperand: This property validates that the Constraint has at least one 'odrl:rightOperand' of type 'rdfs:Literal'. It ensures that the right operand of the constraint is properly defined.
+
+# odrl:unit: This property allows the Constraint to have an optional 'odrl:unit' of type 'odrl:Unit'. It specifies that the constraint may include a unit if necessary.
+
+# odrl:dataType: This property permits the Constraint to have an optional 'odrl:dataType' of type 'rdfs:Datatype'. It specifies that the constraint may include a data type if necessary.
+# SHACL shape constraint for odrl:Constraint
+# total properties = 4
+drk:ConstraintShape
+    a sh:NodeShape ;
+    sh:targetClass odrl:Constraint ;
+    sh:property [
+        sh:path odrl:uid ;
+        # sh:nodeKind sh:IRI ;
+        sh:minCount 1 ;
+        sh:message "The Constraint's 'odrl:uid' property is missing or not an IRI." ;
+    ] ;
+    sh:property [
+        sh:path odrl:leftOperand ;
+        # sh:nodeKind sh:IRI ;
+        sh:minCount 1 ;
+        sh:message "The Constraint must have at least one 'odrl:leftOperand' of type 'odrl:Operand'." ;
+    ] ;
+    sh:property [
+        sh:path odrl:operator ;
+        # sh:nodeKind sh:IRI ;
+        sh:minCount 1 ;
+        sh:message "The Constraint must have at least one 'odrl:operator' of type 'odrl:Operator'." ;
+    ] ;
+    sh:property [
+        sh:path odrl:rightOperand ;
+        # sh:nodeKind sh:Literal ;
+        sh:minCount 1 ;
+        sh:message "The Constraint must have at least one 'odrl:rightOperand' of type 'rdfs:Literal'." ;
+    ] ;
+    sh:property [
+        sh:path odrl:unit ;
+        # sh:nodeKind sh:IRI ;
+        sh:minCount 0 ;  # Adjust as needed
+        sh:message "The Constraint may have 'odrl:unit' of type 'odrl:Unit'." ;
+    ] ;
+    sh:property [
+        sh:path odrl:dataType ;
+        # sh:nodeKind sh:IRI ;
+        sh:minCount 0 ;  # Adjust as needed
+        sh:message "The Constraint may have 'odrl:dataType' of type 'rdfs:Datatype'." ;
+    ] .
+

@@ -1,0 +1,34 @@
+{
+    "metadata": {
+        "source_database": "odrl3_final_e3",
+        "source_collection": "e3_41nano_rewrite_4"
+    },
+    "results": {
+        "progressive": {
+            "average_reflection_attempts": 7.045454545454546,
+            "performance_by_strategy": {
+                "ontology": {
+                    "syntactic_score": "79.94%",
+                    "semantic_score": "42.00%"
+                },
+                "semantic_syntactic": {
+                    "syntactic_score": "91.58%",
+                    "semantic_score": "69.03%"
+                }
+            }
+        },
+        "all": {
+            "average_reflection_attempts": 7.045454545454546,
+            "performance_by_strategy": {
+                "ontology": {
+                    "syntactic_score": "79.94%",
+                    "semantic_score": "42.00%"
+                },
+                "semantic_syntactic": {
+                    "syntactic_score": "91.58%",
+                    "semantic_score": "69.03%"
+                }
+            }
+        }
+    }
+}

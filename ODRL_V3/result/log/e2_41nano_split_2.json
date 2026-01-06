@@ -1,0 +1,29 @@
+[
+    {
+        "timestamp_utc": "2025-07-27T08:48:46.431410+00:00",
+        "configuration": {
+            "models_used": {
+                "main_llm": "gpt-4.1-nano",
+                "utils_llm": "gpt-4.1",
+                "lora_llm": "/root/autodl-tmp/sft-qwen3-merged/"
+            },
+            "usecase_source": "ODRL_V3\\data_preparation\\merged_final_usecases.json",
+            "mongo_collection": "e2_41nano_split_r",
+            "max_concurrency": 70,
+            "max_reflections": 8,
+            "switches": {
+                "ENABLE_REFERENCE_RESOLUTION": false,
+                "ENABLE_POLICY_SPLITTING": true,
+                "ENABLE_CONSTRAINT_REFLECTION_BRANCH": false
+            }
+        },
+        "results": {
+            "total_execution_time_seconds": 3098.8626,
+            "tracked_token_usage": {
+                "prompt_tokens": 34217099,
+                "completion_tokens": 13700224,
+                "total_tokens": 47917323
+            }
+        }
+    }
+]

@@ -1,0 +1,7 @@
+{
+    "dependencies":["."],
+    "graphs":{
+        "ODRL_NO_ORCHEST":"ODRL_V3.main:app"
+    },
+    "env":".env"
+}

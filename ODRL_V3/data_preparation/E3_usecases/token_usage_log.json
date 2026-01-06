@@ -1,0 +1,10 @@
+{
+    "model_used": "gpt-4.1",
+    "total_use_cases_processed": 770,
+    "max_concurrency": 70,
+    "token_usage": {
+        "total_tokens": 1040732,
+        "prompt_tokens": 955179,
+        "completion_tokens": 85553
+    }
+}
