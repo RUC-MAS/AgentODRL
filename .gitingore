@@ -1,0 +1,60 @@
+# --- Python 基础忽略项 ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# --- 虚拟环境 (如果有) ---
+venv/
+.venv/
+env/
+ENV/
+
+# --- IDE 配置 (VS Code / PyCharm) ---
+.vscode/
+.idea/
+*.swp
+
+# --- 敏感信息 (非常重要！！！) ---
+# 截图里看到了 .env 文件，这个绝对不能上传，里面通常包含 API Key
+.env
+.env.*
+*.key
+*.pem
+
+# --- LangGraph / LangChain 相关 ---
+.langgraph_api/
+ODRL_V3/.langgraph_api/
+
+# --- 项目特定的输出和日志 ---
+# 忽略运行结果文件夹
+ODRL_V3/result/
+# 忽略日志文件
+*.log
+ODRL_V3/result/log/
+
+# --- 临时数据文件 ---
+# 截图里有很多 copy 文件，建议忽略，只保留正式的 json
+*copy*.json
+*backup*
+*.tmp
+
+# --- 操作系统生成的文件 ---
+.DS_Store
+Thumbs.db
